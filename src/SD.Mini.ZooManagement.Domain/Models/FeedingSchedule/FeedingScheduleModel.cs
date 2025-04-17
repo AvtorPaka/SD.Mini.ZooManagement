@@ -13,11 +13,17 @@ public record FeedingScheduleModel(
 {
     public bool IsDone { get; private set; } = false;
 
+    public FeedingScheduleModel(AnimalModel animal, TimeOnly feedingTime, FoodType foodType, bool isDone) :
+        this(animal, feedingTime, foodType)
+    {
+        IsDone = isDone;
+    }
+
     public void MarkDone()
     {
         IsDone = true;
     }
-    
+
     public void ValidateFoodType()
     {
         bool isValid = true;
@@ -29,24 +35,28 @@ public record FeedingScheduleModel(
                 {
                     isValid = false;
                 }
+
                 break;
             case AnimalType.PredatorMammal:
                 if (FoodType != FoodType.PredatorFood)
                 {
                     isValid = false;
                 }
+
                 break;
             case AnimalType.Bird:
                 if (FoodType != FoodType.BirdFood)
                 {
                     isValid = false;
                 }
+
                 break;
             case AnimalType.Fish:
                 if (FoodType != FoodType.FishFood)
                 {
                     isValid = false;
                 }
+
                 break;
             default:
                 isValid = false;
@@ -55,7 +65,10 @@ public record FeedingScheduleModel(
 
         if (!isValid)
         {
-            throw new FeedingScheduleInvalidFoodTypeException("Invalid food type");
+            throw new FeedingScheduleInvalidFoodTypeException(
+                message: "Invalid food type",
+                animalType: Animal.Type,
+                invalidFoodType: FoodType);
         }
     }
 }

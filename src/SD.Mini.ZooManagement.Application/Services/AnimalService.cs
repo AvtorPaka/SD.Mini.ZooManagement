@@ -22,11 +22,16 @@ public class AnimalService : IAnimalService
 {
     private readonly IAnimalsRepository _animalsRepository;
     private readonly IEnclosureRepository _enclosureRepository;
+    private readonly IFeedingScheduleRepository _feedingScheduleRepository;
 
-    public AnimalService(IAnimalsRepository animalsRepository, IEnclosureRepository enclosureRepository)
+    public AnimalService(
+        IAnimalsRepository animalsRepository,
+        IEnclosureRepository enclosureRepository,
+        IFeedingScheduleRepository feedingScheduleRepository)
     {
         _animalsRepository = animalsRepository;
         _enclosureRepository = enclosureRepository;
+        _feedingScheduleRepository = feedingScheduleRepository;
     }
 
     public async Task<EntityId> AddNewAnimal(AnimalModel animalModel, CancellationToken cancellationToken)
@@ -174,6 +179,11 @@ public class AnimalService : IAnimalService
                 cancellationToken: cancellationToken
             );
         }
+
+        await _feedingScheduleRepository.DeleteByAnimalId(
+            animalId: animalEntity.Id,
+            cancellationToken: cancellationToken
+        );
 
         await _animalsRepository.DeleteAnimalById(
             id: id,

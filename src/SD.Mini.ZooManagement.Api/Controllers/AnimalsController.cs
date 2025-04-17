@@ -92,7 +92,7 @@ public class AnimalsController : ControllerBase
     }
 
     [HttpPut]
-    [Route("transfer")]
+    [Route("transfer-enclosure")]
     [ProducesResponseType<ChangeAnimalEnclosureResponse>(200)]
     [ErrorResponseType(400)]
     [ErrorResponseType(404)]

@@ -24,5 +24,7 @@ Swagger will be available for address:  **http://localhost:{SD_ZOO_API_PORT}/api
 
 ### Implemented functionality
 
+All implemented functionality is reflected in Swagger. 
+
 
 ### Concepts and principles of DDD and Clean Architecture

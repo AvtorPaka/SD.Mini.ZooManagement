@@ -19,10 +19,7 @@ public record AnimalModel(
         HealthCondition = healthCondition;
     }
 
-    public void Feed()
-    {
-        //Покормил, проверяй АХХАХАХАХАХ, идиотия блять
-    }
+    public void Feed() { }
 
     public void Heal()
     {

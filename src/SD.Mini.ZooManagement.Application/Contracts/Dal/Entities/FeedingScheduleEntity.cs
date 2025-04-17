@@ -10,6 +10,7 @@ public class FeedingScheduleEntity
     // Ugly imitation of table references in sql databases, alike EF Core
     public required EntityId AnimalId { get; init; }
     
-    public TimeOnly FeedingTime { get; set; }
+    public TimeOnly FeedingTime { get; init; }
     public FoodType FoodType { get; init; }
+    public bool IsDone { get; set; }
 }

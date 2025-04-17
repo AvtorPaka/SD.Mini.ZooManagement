@@ -7,6 +7,7 @@ using SD.Mini.ZooManagement.Api.Contracts.Responses;
 using SD.Mini.ZooManagement.Application.Exceptions.Application;
 using SD.Mini.ZooManagement.Application.Exceptions.Application.Animals;
 using SD.Mini.ZooManagement.Application.Exceptions.Application.Enclosures;
+using SD.Mini.ZooManagement.Application.Exceptions.Application.FeedingSchedules;
 
 namespace SD.Mini.ZooManagement.Api.FilterAttributes.Utils;
 
@@ -93,6 +94,44 @@ internal static class ErrorRequestHandler
                 StatusCode: HttpStatusCode.BadRequest,
                 Message: ex.Message,
                 Exceptions: []
+            )
+        )
+        {
+            ContentType = "application/json",
+            StatusCode = (int)HttpStatusCode.BadRequest
+        };
+
+        context.Result = result;
+    }
+
+    // Feeding Schedule
+
+    internal static void HandleFeedingScheduleNotFound(ExceptionContext context, FeedingScheduleNotFoundException ex)
+    {
+        JsonResult result = new JsonResult(
+            new ErrorResponse(
+                StatusCode: HttpStatusCode.NotFound,
+                Message: $"Feeding schedule with id: {ex.NotFoundException.InvalidId} couldn't be found.",
+                Exceptions: [ex.NotFoundException.InvalidId.ToString()]
+            )
+        )
+        {
+            ContentType = "application/json",
+            StatusCode = (int)HttpStatusCode.NotFound
+        };
+
+        context.Result = result;
+    }
+
+
+    internal static void HandleFeedingScheduleInvalidFoodType(ExceptionContext context, FeedingScheduleValidationException ex)
+    {
+        JsonResult result = new JsonResult(
+            new ErrorResponse(
+                StatusCode: HttpStatusCode.BadRequest,
+                Message:
+                $"Schedule food type: {ex.FoodTypeException.InvalidFoodType} is incompatible with animal type: {ex.FoodTypeException.AnimalType}",
+                Exceptions: [ex.FoodTypeException.InvalidFoodType.ToString()]
             )
         )
         {

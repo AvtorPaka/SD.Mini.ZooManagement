@@ -11,6 +11,7 @@ public static class ServiceCollectionExtensions
         services.AddScoped<IAnimalService, AnimalService>();
         services.AddScoped<IAnimalTransferService, AnimalTransferService>();
         services.AddScoped<IEnclosureService, EnclosureService>();
+        services.AddScoped<IFeedingOrganizationService, FeedingOrganizationService>();
         
         return services;
     }

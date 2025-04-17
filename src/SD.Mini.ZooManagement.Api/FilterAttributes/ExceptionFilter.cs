@@ -4,6 +4,7 @@ using SD.Mini.ZooManagement.Api.FilterAttributes.Utils;
 using SD.Mini.ZooManagement.Application.Exceptions.Application;
 using SD.Mini.ZooManagement.Application.Exceptions.Application.Animals;
 using SD.Mini.ZooManagement.Application.Exceptions.Application.Enclosures;
+using SD.Mini.ZooManagement.Application.Exceptions.Application.FeedingSchedules;
 
 namespace SD.Mini.ZooManagement.Api.FilterAttributes;
 
@@ -29,6 +30,14 @@ public class ExceptionFilter : IExceptionFilter
         switch (context.Exception)
         {
             // TODO: Add
+            case FeedingScheduleValidationException ex:
+                ErrorRequestHandler.HandleFeedingScheduleInvalidFoodType(context, ex);
+                break;
+            
+            case FeedingScheduleNotFoundException ex:
+                ErrorRequestHandler.HandleFeedingScheduleNotFound(context, ex);
+                break;
+            
             case AnimalTransferValidationException ex:
                 ErrorRequestHandler.HandleTransferValidation(context, ex);
                 break;
