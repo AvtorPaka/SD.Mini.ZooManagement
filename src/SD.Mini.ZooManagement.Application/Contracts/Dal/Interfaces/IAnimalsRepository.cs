@@ -9,4 +9,6 @@ public interface IAnimalsRepository: IDbRepository
     public Task<AnimalEntity> GetAnimalById(EntityId id, CancellationToken cancellationToken);
     public Task<IReadOnlyList<AnimalEntity>> GetAnimals(CancellationToken cancellationToken);
     public Task DeleteAnimalById(EntityId id, CancellationToken cancellationToken);
+    public Task UpdateAnimal(AnimalEntity updatedEntity, CancellationToken cancellationToken);
+    public Task DeleteAnimalsEnclosureId(EntityId enclosureId, CancellationToken cancellationToken);
 }

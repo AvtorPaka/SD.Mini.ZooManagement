@@ -19,4 +19,19 @@ internal static class ModelMappers
             Type = model.Type
         };
     }
+    
+    internal static AnimalEntity MapModelToEntity(this AnimalModel model, EntityId id, EntityId? enclosureId)
+    {
+        return new AnimalEntity
+        {
+            Id = id,
+            Birthday = model.Birthday,
+            EnclosureId = enclosureId,
+            FavouriteFood = model.FavouriteFood,
+            Gender = model.Gender,
+            HealthCondition = model.HealthCondition,
+            Nickname = model.Nickname,
+            Type = model.Type
+        };
+    }
 }

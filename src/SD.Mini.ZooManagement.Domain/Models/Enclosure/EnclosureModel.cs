@@ -13,6 +13,12 @@ public record EnclosureModel(
 {
     public uint CurrentCapacity { get; private set; } = 0;
 
+    public EnclosureModel(EnclosureType type, decimal volume, uint maximumCapacity, uint currentCapacity)
+        : this(type, volume, maximumCapacity)
+    {
+        CurrentCapacity = currentCapacity;
+    }
+
     // Analogs of removing and adding an animal to an enclosure, as required in the task to belong to model.
     // Since the domain model must be isolated, it cannot have direct communication
     // with repositories and its entities, which are responsible for the relationship
@@ -21,7 +27,7 @@ public record EnclosureModel(
     public void IncreaseCurrentCapacity(AnimalModel animalModel)
     {
         ValidateAnimalType(animalModel.Type);
-        
+
         if (CurrentCapacity == MaximumCapacity)
         {
             throw new EnclosureCapacityException("Enclosure capacity is out of range.");
@@ -53,7 +59,7 @@ public record EnclosureModel(
             case AnimalType.HerbivoreMammal:
                 if (Type != EnclosureType.HerbivoreCage)
                 {
-                    isValid= false;
+                    isValid = false;
                 }
 
                 break;
@@ -64,7 +70,7 @@ public record EnclosureModel(
                 }
 
                 break;
-            
+
             default:
                 isValid = true;
                 break;
@@ -72,7 +78,7 @@ public record EnclosureModel(
 
         if (!isValid)
         {
-            throw new EnclosureInvalidAnimalTypeException("Invalid animal type");
+            throw new EnclosureInvalidAnimalTypeException("Invalid animal type", animalType, Type);
         }
     }
 

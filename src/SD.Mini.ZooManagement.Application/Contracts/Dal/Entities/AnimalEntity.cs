@@ -5,7 +5,7 @@ namespace SD.Mini.ZooManagement.Application.Contracts.Dal.Entities;
 
 public class AnimalEntity
 {
-    public EntityId Id { get; } = new();
+    public EntityId Id { get; init; } = new();
     
     // Ugly imitation of table references in sql databases, alike EF Core
     public EntityId? EnclosureId { get; set; }

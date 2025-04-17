@@ -17,6 +17,7 @@ public static class ServiceCollectionExtensions
     public static IServiceCollection AddDalRepositories(this IServiceCollection services)
     {
         services.AddScoped<IAnimalsRepository, AnimalsRepository>();
+        services.AddScoped<IEnclosureRepository, EnclosureRepository>();
         
         return services;
     }

@@ -10,4 +10,5 @@ public interface IAnimalService
     public Task<AnimalModelContainer> GetAnimal(EntityId id, CancellationToken cancellationToken);
     public Task<IReadOnlyList<AnimalModelContainer>> GetAnimals(CancellationToken cancellationToken);
     public Task DeleteAnimal(EntityId id, CancellationToken cancellationToken);
+    public Task HealAnimal(EntityId id, CancellationToken cancellationToken);
 }

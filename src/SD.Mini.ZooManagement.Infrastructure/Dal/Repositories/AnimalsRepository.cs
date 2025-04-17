@@ -21,7 +21,7 @@ public class AnimalsRepository : BaseRepository, IAnimalsRepository
 
     public async Task<AnimalEntity> GetAnimalById(EntityId id, CancellationToken cancellationToken)
     {
-        var entity = MemoryStorage.AnimalEntities.SingleOrDefault(e => e.Id == id);
+        var entity = MemoryStorage.AnimalEntities.FirstOrDefault(e => e.Id == id);
 
         if (entity == null)
         {
@@ -38,12 +38,34 @@ public class AnimalsRepository : BaseRepository, IAnimalsRepository
 
     public async Task DeleteAnimalById(EntityId id, CancellationToken cancellationToken)
     {
-        int removedElements = MemoryStorage.AnimalEntities.RemoveAll(e => e.Id == id);
+        int deletedCount = MemoryStorage.AnimalEntities.RemoveAll(e => e.Id == id);
 
         await Task.Delay(TimeSpan.FromMicroseconds(1), cancellationToken); // Fiction ;D
-        if (removedElements == 0)
+        if (deletedCount == 0)
         {
             throw new EntityNotFoundException("Entity couldn't be found", id);
         }
+    }
+
+    public async Task UpdateAnimal(AnimalEntity updatedEntity, CancellationToken cancellationToken)
+    {
+        await Task.Delay(TimeSpan.FromMicroseconds(1), cancellationToken); // Fiction ;D
+        var entity = MemoryStorage.AnimalEntities.FirstOrDefault(e => e.Id == updatedEntity.Id);
+
+        if (entity == null)
+        {
+            throw new EntityNotFoundException("Entity couldn't be found", updatedEntity.Id);
+        }
+
+        entity.HealthCondition = updatedEntity.HealthCondition;
+        entity.EnclosureId = updatedEntity.EnclosureId;
+    }
+
+    public async Task DeleteAnimalsEnclosureId(EntityId enclosureId,
+        CancellationToken cancellationToken)
+    {
+        await Task.Delay(TimeSpan.FromMicroseconds(1), cancellationToken); // Fiction ;D
+        MemoryStorage.AnimalEntities.Where(e => e.EnclosureId == enclosureId).ToList()
+            .ForEach(e => e.EnclosureId = null);
     }
 }
