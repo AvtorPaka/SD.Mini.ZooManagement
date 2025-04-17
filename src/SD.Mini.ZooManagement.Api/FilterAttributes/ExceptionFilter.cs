@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc.Filters;
 using SD.Mini.ZooManagement.Api.Extensions;
 using SD.Mini.ZooManagement.Api.FilterAttributes.Utils;
 using SD.Mini.ZooManagement.Application.Exceptions.Application;
+using SD.Mini.ZooManagement.Application.Exceptions.Application.Animals;
 
 namespace SD.Mini.ZooManagement.Api.FilterAttributes;
 
@@ -27,6 +28,10 @@ public class ExceptionFilter: IExceptionFilter
         switch (context.Exception)
         {
             // TODO: Add
+            case AnimalNotFoundException ex:
+                ErrorRequestHandler.HandleAnimalNotFound(context, ex);
+                break;
+            
             case ApplicationValidationException ex:
                 ErrorRequestHandler.HandleBadRequest(context, ex);
                 break;

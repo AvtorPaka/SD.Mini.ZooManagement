@@ -8,15 +8,16 @@ namespace SD.Mini.ZooManagement.Domain.Models.Enclosure;
 public record EnclosureModel(
     EnclosureType Type,
     decimal Volume,
-    int MaximumCapacity
+    uint MaximumCapacity
 )
 {
-    public int CurrentCapacity { get; private set; } = 0;
+    public uint CurrentCapacity { get; private set; } = 0;
 
     // Analogs of removing and adding an animal to an enclosure, as required in the task to belong to model.
     // Since the domain model must be isolated, it cannot have direct communication
     // with repositories and its entities, which are responsible for the relationship
-    // between animals and enclosures. Rich Models - an approach created by retards -> (*´﹃｀*).
+    // between animals and enclosures and have always been a significant and necessary part of Clean Architecture.
+    // Rich Models - an approach created by retards -> (´﹃｀).
     public void IncreaseCurrentCapacity(AnimalModel animalModel)
     {
         ValidateAnimalType(animalModel.Type);

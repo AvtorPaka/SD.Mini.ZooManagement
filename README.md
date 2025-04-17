@@ -20,7 +20,7 @@ cd SD.Mini.ZooManagement/ && touch .env && cp .env.template .env && docker compo
 
 ### Swagger
 
-Swagger will be available for address:  **http://localhost:{SD_ZOO_API_PORT}/swagger/**
+Swagger will be available for address:  **http://localhost:{SD_ZOO_API_PORT}/api/sd-zoo/swagger/**
 
 ### Implemented functionality
 

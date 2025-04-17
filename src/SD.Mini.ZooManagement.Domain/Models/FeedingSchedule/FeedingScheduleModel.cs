@@ -18,7 +18,7 @@ public record FeedingScheduleModel(
         IsDone = true;
     }
     
-    public void ValidateAnimalType()
+    public void ValidateFoodType()
     {
         bool isValid = true;
 

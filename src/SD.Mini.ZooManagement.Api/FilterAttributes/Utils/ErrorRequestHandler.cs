@@ -5,11 +5,29 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using SD.Mini.ZooManagement.Api.Contracts.Responses;
 using SD.Mini.ZooManagement.Application.Exceptions.Application;
+using SD.Mini.ZooManagement.Application.Exceptions.Application.Animals;
 
 namespace SD.Mini.ZooManagement.Api.FilterAttributes.Utils;
 
 internal static class ErrorRequestHandler
 {
+    internal static void HandleAnimalNotFound(ExceptionContext context, AnimalNotFoundException ex)
+    {
+        JsonResult result = new JsonResult(
+            new ErrorResponse(
+                StatusCode: HttpStatusCode.NotFound,
+                Message: $"Animal with id: {ex.NotFoundException.InvalidId} couldn't be found.",
+                Exceptions: [ex.NotFoundException.InvalidId.ToString()]
+            )
+        )
+        {
+            ContentType = "application/json",
+            StatusCode = (int)HttpStatusCode.NotFound
+        };
+
+        context.Result = result;
+    }
+
     internal static void HandleInternalError(ExceptionContext context)
     {
         JsonResult result = new JsonResult(
@@ -26,7 +44,7 @@ internal static class ErrorRequestHandler
 
         context.Result = result;
     }
-    
+
     internal static void HandleBadRequest(ExceptionContext context, ApplicationValidationException ex)
     {
         JsonResult result = new JsonResult(
@@ -43,7 +61,7 @@ internal static class ErrorRequestHandler
 
         context.Result = result;
     }
-    
+
     private static IEnumerable<string> QueryUnvalidatedFields(
         ValidationException exception)
     {

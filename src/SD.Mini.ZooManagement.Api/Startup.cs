@@ -1,8 +1,12 @@
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using FluentValidation;
+using Microsoft.OpenApi.Models;
 using SD.Mini.ZooManagement.Api.Extensions;
 using SD.Mini.ZooManagement.Api.FilterAttributes;
 using SD.Mini.ZooManagement.Api.Middleware;
+using SD.Mini.ZooManagement.Application.DependencyInjection.Extensions;
+using SD.Mini.ZooManagement.Infrastructure.DependencyInjection.Extensions;
 
 namespace SD.Mini.ZooManagement.Api;
 
@@ -20,11 +24,15 @@ public sealed class Startup
     public void ConfigureServices(IServiceCollection services)
     {
         services
+            .AddDalInfrastructure()
+            .AddDalRepositories()
+            .AddDomainServices()
             .AddGlobalFilters()
             .AddControllers()
             .AddJsonOptions(options =>
             {
                 options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.SnakeCaseLower;
+                options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
             })
             .AddMvcOptions(options =>
             {
@@ -32,7 +40,17 @@ public sealed class Startup
             })
             .Services
             .AddEndpointsApiExplorer()
-            .AddSwaggerGen(o => o.CustomSchemaIds(x => x.FullName));
+            .AddSwaggerGen(options =>
+            {
+                options.AddServer(new OpenApiServer
+                {
+                    Url = "/api/sd-zoo",
+                    Description = "API Base Path"
+                });
+                
+                options.CustomSchemaIds(x => x.FullName);
+                
+            });
     }
 
     public void Configure(IApplicationBuilder app)
@@ -42,7 +60,10 @@ public sealed class Startup
         app.UsePathBase("/api/sd-zoo");
         
         app.UseSwagger();
-        app.UseSwaggerUI();
+        app.UseSwaggerUI(options =>
+        {
+            options.SwaggerEndpoint("/api/sd-zoo/swagger/v1/swagger.json", "SD.Mini.ZooManagement.Api v1");
+        });
         
         app.UseRouting();
 
