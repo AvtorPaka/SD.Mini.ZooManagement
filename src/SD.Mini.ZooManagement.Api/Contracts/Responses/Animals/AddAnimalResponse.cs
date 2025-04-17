@@ -1,0 +1,5 @@
+namespace SD.Mini.ZooManagement.Api.Contracts.Responses.Animals;
+
+public record AddAnimalResponse(
+    string Id
+);

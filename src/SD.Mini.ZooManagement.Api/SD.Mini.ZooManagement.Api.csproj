@@ -15,4 +15,8 @@
       <ProjectReference Include="..\SD.Mini.ZooManagement.Infrastructure\SD.Mini.ZooManagement.Infrastructure.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Contracts\Requests\Statistics\" />
+    </ItemGroup>
+
 </Project>
