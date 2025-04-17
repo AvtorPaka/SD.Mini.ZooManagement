@@ -29,7 +29,6 @@ public class ExceptionFilter : IExceptionFilter
 
         switch (context.Exception)
         {
-            // TODO: Add
             case FeedingScheduleValidationException ex:
                 ErrorRequestHandler.HandleFeedingScheduleInvalidFoodType(context, ex);
                 break;
