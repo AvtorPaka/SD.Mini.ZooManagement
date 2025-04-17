@@ -15,4 +15,15 @@
       <ProjectReference Include="..\SD.Mini.ZooManagement.Infrastructure\SD.Mini.ZooManagement.Infrastructure.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Contracts\Requests\Animals\" />
+      <Folder Include="Contracts\Requests\Enclosure\" />
+      <Folder Include="Contracts\Requests\FeedingSchedule\" />
+      <Folder Include="Contracts\Requests\Statistics\" />
+      <Folder Include="Contracts\Responses\Animals\" />
+      <Folder Include="Contracts\Responses\Enclosure\" />
+      <Folder Include="Contracts\Responses\FeedingSchedule\" />
+      <Folder Include="Contracts\Responses\Statistics\" />
+    </ItemGroup>
+
 </Project>

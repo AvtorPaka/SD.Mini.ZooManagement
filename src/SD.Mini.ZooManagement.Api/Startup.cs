@@ -1,4 +1,8 @@
 using System.Text.Json;
+using FluentValidation;
+using SD.Mini.ZooManagement.Api.Extensions;
+using SD.Mini.ZooManagement.Api.FilterAttributes;
+using SD.Mini.ZooManagement.Api.Middleware;
 
 namespace SD.Mini.ZooManagement.Api;
 
@@ -16,6 +20,7 @@ public sealed class Startup
     public void ConfigureServices(IServiceCollection services)
     {
         services
+            .AddGlobalFilters()
             .AddControllers()
             .AddJsonOptions(options =>
             {
@@ -23,7 +28,7 @@ public sealed class Startup
             })
             .AddMvcOptions(options =>
             {
-                // TODO: Add exception filter
+                options.Filters.Add<ExceptionFilter>();
             })
             .Services
             .AddEndpointsApiExplorer()
@@ -32,11 +37,16 @@ public sealed class Startup
 
     public void Configure(IApplicationBuilder app)
     {
+        ValidatorOptions.Global.LanguageManager.Enabled = false;
+        app.UseMiddleware<TracingMiddleware>();
         app.UsePathBase("/api/sd-zoo");
+        
         app.UseSwagger();
         app.UseSwaggerUI();
         
         app.UseRouting();
+
+        app.UseMiddleware<LoggingMiddleware>();
 
         app.UseEndpoints(builder =>
         {

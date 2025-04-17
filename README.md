@@ -7,9 +7,9 @@
 #### Change .env.template variables if needed
 
 | **Variable**        | **Description** | **Default** |
-|---------------------|--------------|------------|
-| **SD_ZOO_API_PORT** | Port, forwarded to docker container with application | 7071 |
-| **BUILD_ARCH**      | Your system / docker builder architecture. | arm64 |
+|---------------------|--------------|-------------|
+| **SD_ZOO_API_PORT** | Port, forwarded to docker container with application | 7070        |
+| **BUILD_ARCH**      | Your system / docker builder architecture | arm64       |
 | **BUILD_PLATFORM**  | Your system / docker builder OS  | linux/arm64 |
 
 #### Program boot
